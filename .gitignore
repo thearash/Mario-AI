@@ -1,0 +1,14 @@
+.classpath
+
+bin/*
+
+/lib
+
+src/EDAPCG/grammar/Displayer.java
+src/EDAPCG/grammar/Parser*.java
+src/EDAPCG/grammar/Rule*.java
+src/EDAPCG/grammar/Terminal*.java
+src/EDAPCG/grammar/Visitor.java
+src/EDAPCG/grammar/XmlDisplayer.java
+
+src/EDAPCG/res/*

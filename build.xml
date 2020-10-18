@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="marioaichallenge">
+	
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+	<property file="build.properties"/>
+	
+    <path id="marioaichallenge.classpath">
+        <pathelement location="bin"/>
+    	<pathelement location="EDAPCG.jar"/>
+    </path>
+
+	
+    <target name="clean">
+        <delete dir="bin"/>
+    	<delete file="EDAPCG.jar"/>
+    	<delete dir="src/EDAPCG/res"/>
+    	<!--<delete file="player.txt"/>
+        <delete file="DetailedInfo.txt"/>-->
+    </target>
+	
+    <target name="init">
+    	
+		<zip destfile="EDAPCG.jar">
+	    	<zipgroupfileset dir="extra/lib/" includes="**.jar"/>
+		</zip>
+    	
+        <mkdir dir="bin"/>
+    	<!-- mimics 'src' structure in 'bin': -->
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    	<mkdir dir="${res.folder}"/>
+    	
+    	<antcall target="copy-sch"/>
+    	<antcall target="copy-abnf"/>
+    </target>
+	
+	<target name="copy-abnf">
+        <copy todir="${res.folder}">
+        	<fileset dir="extra/sch/" casesensitive="yes">
+        		<include name="**/*.abnf"/>
+        	</fileset>
+        </copy>
+	</target>
+	
+	<target name="copy-sch">
+        <copy todir="${res.folder}">
+        	<fileset dir="extra/sch/" casesensitive="yes">
+        	 	<include name="**/*.sch"/>
+        	</fileset>
+        </copy>
+	</target>
+	
+	
+	<target name="grammar" depends="copy-abnf">
+		<java classname="com.parse2.aparse.Parser" failonerror="true" fork="yes" >
+			<classpath refid="marioaichallenge.classpath"/>
+			<arg value="-destdir"/>
+			<arg value="${grammar.sourceFolder}"/>
+			<arg value="-package"/>
+			<arg value="${grammar.packageName}"/>
+			<arg value="${res.folder}/${grammar.grammarFile}"/>
+		</java>
+	</target>
+	
+	
+    <target name="build">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
+            <src path="src"/>
+            <classpath refid="marioaichallenge.classpath"/>
+        </javac>
+    </target>
+	
+	
+    <target name="schematics" depends="copy-sch">
+        <java classname="EDAPCG.grammar.Constructor" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+        	<arg value="${res.folder}/${schematics.explorer}"/>
+        	<arg value="${res.folder}/${schematics.speeder}"/>
+        </java>
+    </target>
+	
+    <target name="data">
+        <java classname="EDAPCG.cluster.DataFileParser" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+			<arg value="${data.dataFolder}"/>
+        	<arg value="${res.folder}/${data.dataFile}"/>
+        </java>
+    </target>
+	
+	
+    <target name="cluster">
+        <java classname="EDAPCG.cluster.ClusterGenerator" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+			<arg value="${res.folder}/${data.dataFile}"/>
+        	<arg value="${res.folder}/${data.clusterFile}"/>
+        	<arg value="${res.folder}/${data.csvFile}"/>
+        </java>
+    </target>
+	
+    <target name="play">
+        <java classname="dk.itu.mario.engine.Play" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+        </java>
+    </target>
+	
+	
+    <target name="playc">
+        <java classname="dk.itu.mario.engine.PlayCustomized" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+        </java>
+    </target>
+	
+    <target name="weka">
+        <java jar="extra/weka.jar" failonerror="true" fork="yes">
+            <jvmarg value="-Xmx512m" />
+        </java>
+    </target>
+	
+</project>
