@@ -1,8 +1,6 @@
 # Mario-AI
-Source code for MSc Thesis
+Experimental design in using EDA for PCG in IMB
 
-Link to the paper (not published)
-https://drive.google.com/file/d/1WkDc_D2XKGoFFwBw5GTNYiKK-pDQTVbD/view?usp=sharing
+I will fill this with detailed walkthrough, in the meantime feel free to contact me if you have any questions.
 
-Link to the MSc thesis file (in farsi)
-https://drive.google.com/file/d/17MO30DmjbW6vBkWYQtV5q5qcN4lcdaSB/view?usp=sharing
+The resulting published paper will be announced shortly.
