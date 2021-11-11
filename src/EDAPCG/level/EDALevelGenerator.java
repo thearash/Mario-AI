@@ -134,7 +134,7 @@ public class EDALevelGenerator implements LevelGenerator {
 			// a3 Pattern Density
 			// a4 Pattern Variety
 			// a5 Density
-			double a1 = 0.1, a2 = 0.6, a3 = 0.1, a4 = 0.1, a5 = 0.1; //  values for F.F. coefficients 
+			double a1 = 0.4, a2 = 0.2, a3 = 0.2, a4 = 0.1, a5 = 0.1; //  values for F.F. coefficients 
 			int individual = 100; // EDA generation pop
 			int generations = 300; // EDA generation count
 			double P_EDA = 0.0;
