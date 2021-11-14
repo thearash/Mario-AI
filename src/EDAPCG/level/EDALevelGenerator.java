@@ -949,7 +949,7 @@ public class EDALevelGenerator implements LevelGenerator {
 						if(elements[xxx].equals(elements_c[xxx]))
 							cc ++;
 					}
-					double cc_avg = cc/100.0; // the trace size would be 200 hence gives the distibution for the DE in generation 
+					double cc_avg = cc/100.0; // the trace size would be 200 hence gives the distibution for the DE in generation, this takes about 2 hours of computation time!
 					if(gg_c>= gg)
 						str_cc +=   cc_avg + ",";
 					else
